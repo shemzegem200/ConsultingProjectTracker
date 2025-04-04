@@ -1,0 +1,84 @@
+.dashboard {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+
+/* Sidebar Styling */
+.sidebar {
+  background-color: #512da8;
+  color: white;
+  width: 300px;
+  transition: width 0.3s ease;
+  padding: 20px 10px;
+}
+
+a{
+  all: unset;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar.closed {
+  width: 60px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 10px 0;
+}
+
+ul a{
+  width: 100%;
+}
+ul a li{
+  width: 100%;
+}
+
+.sidebar li {
+  margin-top: 9px;
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 7px;
+  font-weight: 500;
+}
+
+.sidebar li:hover {
+  background: #715ebb;
+}
+
+.sidebar .icon {
+  font-size: 20px;
+  margin-right: 14px;
+}
+
+/* Logout Button */
+.sidebar .logout {
+  color: #e74c3c;
+}
+
+/* Toggle Button */
+.toggle-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+  padding: 10px;
+  display: block;
+  width: 100%;
+  text-align: left;
+}
+
+/* Main Content */
+.main-content {
+  height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  
+  scrollbar-width: none;  /* Firefox */
+}

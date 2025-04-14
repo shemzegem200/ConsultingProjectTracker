@@ -588,8 +588,11 @@ app.post("/store-project", upload.fields([
     const result = await axios.post(GOOGLE_SHEET_PROJECT_URL, obj);
     console.log(result.data);
     console.log(fullStudentData);
+    const emailed = new Set();
     
       for (const stud of fullStudentData.flat()){
+        if (!stud.username || emailed.has(stud.username)) continue;
+        emailed.add(stud.username);
         const subject = `Project Stored Successfully: ${projectData.title}`;
         const message = `
           Hello ${stud.name},
@@ -776,9 +779,12 @@ app.put("/update-project", async(req, res)=>{
     });
     console.log(response);
     const result = await response.json();
+    const emailed = new Set();
 
     console.log(students);
     for (const stud of students){
+      if (!stud.username || emailed.has(stud.username)) continue;
+      emailed.add(stud.username);
       const subject = `Project Updated Successfully: ${obj.title}`;
       const message = `
           Hello ${stud.name},
@@ -900,8 +906,11 @@ app.delete("/delete-project", async(req, res)=>{
     });
     console.log(response);
     const result = await response.json();
+    const emailed = new Set();
 
     for (const stud of obj.students){
+      if (!stud.username || emailed.has(stud.username)) continue;
+      emailed.add(stud.username);
       const subject = `Project Deleted Successfully: ${obj.title}`;
       const message = `
           Hello ${stud.name},

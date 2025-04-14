@@ -63,6 +63,36 @@ const Layout = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        const response = await fetch("http://localhost:4000/get-user-info", {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: userInfo.username, role: userInfo.role })
+        });
+  
+        if (!response.ok) throw new Error("Network error while fetching user info");
+  
+        const res = await response.json();
+        setUserInfo(res.user);
+        localStorage.setItem("userInfo", JSON.stringify(res.user));
+      } catch (err) {
+        console.error("Fetch user info failed:", err.message);
+      }
+    };
+  
+    // Fetch immediately on mount
+    fetchUserDetails();
+  
+    // Set interval to fetch every 5 mins
+    const intervalId = setInterval(fetchUserDetails, 1000 * 60 * 5);
+  
+    // Cleanup
+    return () => clearInterval(intervalId);
+  }, [userInfo.username, userInfo.role]);
+  
+
 
   if (!userInfo || !userInfo.username || !userInfo.role) {
     return <Navigate to="/" replace />;

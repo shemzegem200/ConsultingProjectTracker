@@ -276,8 +276,9 @@ const SearchPage = () => {
                 (!filterOptions.duration || project.duration >= filterOptions.duration) &&
                 (!filterOptions.year || project.year === filterOptions.year) &&
                 (!filterOptions.progress || project.progress === filterOptions.progress) &&
-                (!filterOptions.minAmount || project.sanctionedAmount >= filterOptions.minAmount) &&
-                (project.title.toLowerCase().includes(searchVal.toLowerCase()))
+                (filterOptions.minAmount==null || parseInt(project.amtSanct) >= parseInt(filterOptions.minAmount)) &&
+                (project.title.toLowerCase().includes(searchVal.toLowerCase())) &&
+                (!filterOptions.supervisor || filterOptions.supervisor === project.piName || filterOptions.supervisor == project.cpiName)
               );
             }).map((proj, i)=>(
                 <Card colorIndex={i} proj={proj}/>

@@ -5,15 +5,19 @@ import {FaFilter} from 'react-icons/fa';
 const FilterModal = ({showModalSetter, projects, setFilterOptions}) => {
     const [industry, setIndustry] = useState('');
     const [uniqueIndustries, setUniqueIndustries] = useState([]);
+    const [uniqueSupervisors, setUniqueSupervisors] = useState([]);
     const [duration, setDuration] = useState('');
     const [year, setYear] = useState('');
     const [progress, setProgress] = useState('');
     const [minAmount, setMinAmount] = useState('');
+    const [supervisor, setSupervisor] = useState('');
 
     useEffect(() => {
       // Prevent body from scrolling
       document.body.style.overflow = 'hidden';
       setUniqueIndustries([...new Set(projects.map(p => p.industry))]);
+      setUniqueSupervisors([...new Set(projects.map(p => p.piName))]);
+      setUniqueSupervisors([...new Set(projects.map(p => p.cpiName))]);
       return () => {
         // Restore scroll when modal unmounts
         document.body.style.overflow = 'auto';
@@ -33,6 +37,7 @@ const FilterModal = ({showModalSetter, projects, setFilterOptions}) => {
             year: year ? parseInt(year) : null,
             progress: progress,
             minAmount: minAmount ? parseFloat(minAmount) : null,
+            supervisor: supervisor,
         };
       
         setFilterOptions(filterObj);
@@ -63,6 +68,15 @@ const FilterModal = ({showModalSetter, projects, setFilterOptions}) => {
                 min={1}
                 onChange={(e) => setDuration(e.target.value)}
             />
+            
+            <select value={supervisor} onChange={(e) => setSupervisor(e.target.value)}>
+                <option value="">Supervisor</option>
+                {uniqueSupervisors.map((sup, index) => (
+                    <option key={index} value={sup}>
+                    {sup}
+                    </option>
+                ))}
+            </select>
             <input
                 type="number"
                 placeholder="Academic Year"

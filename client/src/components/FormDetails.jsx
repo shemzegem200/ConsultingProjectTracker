@@ -129,7 +129,7 @@ const FormDetails = () => {
 
   const handleChangeStudEmail = (index, val)=>{
     let tempStudents = [...students];
-    tempStudents[index].email = val;
+    tempStudents[index].username = val;
     setStudents(tempStudents);
   }
 
@@ -260,7 +260,7 @@ const FormDetails = () => {
                 className="input_1 stud"
                 type="email"
                 placeholder={`Student ${index + 1} Email`}
-                value={students[index]?.email || ""}
+                value={students[index]?.username || ""}
                 onChange={ev => handleChangeStudEmail(index, ev.target.value)}
               />
             </React.Fragment>

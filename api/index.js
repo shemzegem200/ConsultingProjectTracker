@@ -261,7 +261,7 @@ app.post("/signup", async (req, res) => {
  *                   type: string
  *                   example: An unexpected error occurred
  */
-app.post("/signin", async (req, res) => {
+app.post("/signin", async (req, res) => { 
   try {
     const { password, username } = req.body;
     const response = await axios.get(GOOGLE_SHEET_WEBHOOK_URL);
@@ -551,14 +551,22 @@ app.post("/store-project", upload.fields([
 
     const projectData = JSON.parse(rawData);
 
+    console.log(JSON.stringify(projectData));
+
+    const temp = await axios.get(`${GOOGLE_SHEET_WEBHOOK_URL}`);
+    const allStudents = temp.data;
+
     // Fetch full student data for each student
     const fullStudentData = await Promise.all(
       projectData.students.map(async (student) => {
-        const roll = student.username // adjust key as needed
-        const response = await axios.get(`${GOOGLE_SHEET_WEBHOOK_URL}?roll=${roll}`);
-        return response.data;
+        for (const stud of allStudents){
+          if (stud.username===student.username) return stud;
+        }
+        return {};
       })
     );
+    console.log('im here');
+    console.log(fullStudentData);
 
     const file1 = req.files['file1']?.[0];
     const file2 = req.files['file2']?.[0];

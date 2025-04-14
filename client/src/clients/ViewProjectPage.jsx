@@ -80,6 +80,7 @@ const ViewProjectPage = () => {
 
         <p style={{marginTop:'25px'}}><strong>Academic Year:</strong>  {proj.year}</p>
         <p style={{marginTop:'25px'}}><strong>Sanctioned Amount:</strong>  ₹ {proj.amtSanct}</p>
+        <p style={{marginTop:'25px'}}><strong>Duration:</strong>   {proj.duration} months</p>
         {displayOtherDetails && proj.amtRecv && <p style={{marginTop:'25px'}}><strong>Received Amount:</strong>  ₹ {proj.amtRecv}</p>}
         
         <h4 style={{marginTop:'25px'}}>Project Summary:</h4>
@@ -89,7 +90,7 @@ const ViewProjectPage = () => {
         <div className="profile-card-container">
           {proj.students.map((stud,i)=>(
             <>
-              <ProfileCardSmall person={{ name:stud.name, email:stud.username, github: stud.github, linkedin: stud.linkedin}} colorIndex={i}/>
+              <ProfileCardSmall person={{ name:stud.name, email:stud.username||stud.email, github: stud.github, linkedin: stud.linkedin}} colorIndex={i}/>
             </>
           ))}
         </div>

@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Search = () => {
+const Search = ({ value, onChange }) => {
   return (
     <StyledWrapper>
       <div className="InputContainer">
-        <input placeholder="Search.." id="input" className="input" name="text" type="text" />
+        <input placeholder="Search.." id="input" className="input" name="text" type="text" value={value} onChange={onChange} />
       </div>
     </StyledWrapper>
   );

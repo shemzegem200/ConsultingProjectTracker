@@ -13,6 +13,19 @@
     z-index: 1000;
 }
 
+.filter-button{
+    all: unset;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: linear-gradient(rgb(164, 159, 255), rgb(236, 174, 255), rgb(255, 208, 208));
+    box-shadow: 1px 1px 5px 5px rgba(0, 0, 0, 0.082);
+}
+
 .card-container{
     width: 100%;
     padding: 20px;

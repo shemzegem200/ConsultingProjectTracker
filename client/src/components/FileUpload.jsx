@@ -1,12 +1,13 @@
 import React, {useState} from "react";
 import './FileUpload.css';
 
-const FileUpload = ({ text, id }) => {
+const FileUpload = ({ text, id, forwardRef}) => {
   const [selectedFile, setSelectedFile] = useState(null);
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file ? file.name : null);
+    // handleChange(); //testing
   };
 
   const removeFile = () => {
@@ -51,6 +52,7 @@ const FileUpload = ({ text, id }) => {
 
       <input
         required
+        ref={forwardRef}
         id={id}
         type="file"
         accept="application/pdf"

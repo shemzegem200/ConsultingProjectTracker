@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useContext, useState, useEffect} from 'react'
 import './DashboardPage.css';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart } from "recharts";
-
+import { UserContext } from '../App';
+import { subMonths, format, isSameMonth, parseISO } from "date-fns";
 
 // const colors = [
 //     "linear-gradient(to right, rgb(255, 231, 231), rgb(249, 213, 255))",
@@ -17,18 +18,49 @@ const colors = [
 //for bar graph
 const customColors = ["rgb(164, 159, 255)", "rgb(225, 174, 255)", "rgb(236, 174, 255)", "rgb(252, 202, 255)", "rgb(249, 213, 255)", "rgb(255, 208, 208)"];
 
-const data = [
-    { name: "Jan", value: 40, fill: customColors[0] },
-    { name: "Feb", value: 60, fill: customColors[1] },
-    { name: "Mar", value: 75, fill: customColors[2] },
-    { name: "Apr", value: 50, fill: customColors[3] },
-    { name: "May", value: 90, fill: customColors[4] },
-    { name: "Jun", value: 65, fill: customColors[5] },
-];
+// const data = [
+//     { name: "Jan", value: 40, fill: customColors[0] },
+//     { name: "Feb", value: 60, fill: customColors[1] },
+//     { name: "Mar", value: 75, fill: customColors[2] },
+//     { name: "Apr", value: 50, fill: customColors[3] },
+//     { name: "May", value: 90, fill: customColors[4] },
+//     { name: "Jun", value: 65, fill: customColors[5] },
+// ];
 
 
 
 const DashboardPage = () => {
+    const {userInfo, setUserInfo, projects, setProjects} = useContext(UserContext);
+    const [data, setData] = useState([]);
+
+    useEffect(()=>{
+        const now = new Date();
+        // Generate last 6 months (current + previous 5), most recent last
+        const months = Array.from({ length: 6 }, (_, i) => {
+            const date = subMonths(now, 5 - i);
+            return {
+            name: format(date, "MMM"), // "Jan", "Feb", etc.
+            date,
+            };
+        });
+
+        // Count number of projects in each month
+        setData(months.map((month, i) => {
+
+            const count = projects.filter((project) => {
+            const projDate = new Date(project.date); // or parseISO if ISO string
+            return isSameMonth(projDate, month.date);
+            }).length;
+        
+            return {
+            name: month.name,
+            value: count,
+            fill: customColors[i],
+            };
+        }));
+    }, [projects]);
+
+
   return (
     <div>
       <div className="top-title">Dashboard</div>
@@ -36,18 +68,31 @@ const DashboardPage = () => {
       <div className="lower-body">
         <div className="top-cards">
             <div className="dashboard-card" style={{ "--card-gradient":colors[0]}}>
-                <p>NEW PROJECTS</p>
-                <h1><span>^</span> 5</h1>
+                <p>TOTAL PROJECTS</p>
+                <h1><span>^</span> { projects && projects.length}</h1>
             </div>
             
             <div className="dashboard-card" style={{ "--card-gradient":colors[1]}}>
                 <p>MY PROJECTS</p>
-                <h1><span>^</span> 5</h1>
+                <h1><span>^</span> {userInfo && userInfo.projects && userInfo.projects.length}</h1>
             </div>
             
             <div className="dashboard-card" style={{ "--card-gradient":colors[2]}}>
                 <p>BALANCE PAYMENT</p>
-                <h1><span>+</span> ₹12500</h1>
+                    {(() => {
+                    if (!userInfo || !userInfo.projects) return;
+                    const total = userInfo.projects.reduce(
+                        (sum, project) => sum + (project.amtSanct - project.amtRecv),
+                        0
+                    );
+                    const symbol = total > 0 ? '+' : total < 0 ? '-' : '~';
+                    return (
+                        <h1>
+                        <span>{symbol}</span> ₹{Math.abs(total)}
+                        </h1>
+                    );
+                })()}
+
             </div>
         </div>
 

@@ -1,0 +1,24 @@
+.dwnld-btn-outer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.download-btn {
+    all: unset;
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 14px;
+    background: linear-gradient(to right, rgb(155, 150, 255), rgb(255, 194, 194));
+    margin-top: 50px;
+    margin-bottom: 100px;
+    color: white;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.3s ease;
+  }
+  
+  .download-btn:hover {
+    background: linear-gradient(to right, rgb(109, 104, 196),rgb(205, 148, 148));
+  }
+  

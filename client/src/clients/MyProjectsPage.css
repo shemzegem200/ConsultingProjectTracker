@@ -1,0 +1,47 @@
+.my-project{
+    margin-top: 10px;
+    border-radius: 13px;
+    width: 90%;
+    margin-left: 5%;
+    height: 70px;
+    box-shadow: 0.5px 0.5px 2.5px 2.5px rgba(0, 0, 0, 0.043);
+    padding: 15px;
+    align-items: center;
+    display: grid;
+    grid-template-columns: 50px 1fr 50px 20px;
+    gap: 10px;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+.my-project:nth-child(even):hover{
+    box-shadow: 0.5px 0.5px 2.5px 2.5px rgb(227, 213, 255);
+}
+.my-project:nth-child(even):hover .icon-1 {
+    color: rgb(227, 213, 255);
+}
+.my-project:nth-child(odd):hover{
+    box-shadow: 0.5px 0.5px 2.5px 2.5px rgb(255, 214, 214);
+}
+.my-project:nth-child(odd):hover .icon-1 {
+    color: rgb(255, 214, 214);
+}
+
+.icon-1{
+    color: rgba(128, 128, 128, 0.45);
+}
+
+.project-text-content{
+    text-align: center;
+}
+
+.project-text-content-title{
+    font-size: 0.95rem;
+    color: rgb(27, 27, 27);
+}
+
+.project-text-content-industry{
+    margin-top: 7px;
+    font-size: 0.7rem;
+    color: rgb(107, 107, 107);
+}

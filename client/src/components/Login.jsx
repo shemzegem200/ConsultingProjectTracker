@@ -1,23 +1,39 @@
-/* eslint-disable no-unused-vars */
-import { useState, useRef } from "react";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faGooglePlusG } from "@fortawesome/free-brands-svg-icons";
+import {useState, useRef, useContext} from "react";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../App.jsx";
 
 export default function Login() {
+  const {userInfo, setUserInfo, projects, setProjects} = useContext(UserContext);
   const [isSignUp, setIsSignUp] = useState(false);
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [github, setGithub] = useState("");
+  const [linkedin, setLinkedin] = useState("");
   const [isLoading, setLoading] = useState(false);
   const b1 = useRef(null);
   const b2 = useRef(null);
   const navigate = useNavigate();
+  
+  const [role, setRole] = useState("user");
 
   const toggleMode = () => {
     setIsSignUp((prev) => !prev);
   };
+  
+  const prefetchProjectDetails = async()=>{
+    try{
+      const response = await fetch("http://localhost:4000/prefetch-project-info");
+      if (!response.ok) throw new Error(response || "");
+      const data = await response.json();
+      setProjects(data);
+      localStorage.setItem("projects", JSON.stringify(data));
+    }
+    catch(err){
+      alert(err.message);
+    }
+  }
 
   const handleSignUp = async (ev) => {
     ev.preventDefault();
@@ -32,15 +48,19 @@ export default function Login() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, username, password }),
+        body: JSON.stringify({ name, username, password, github, linkedin, role }),
       });
 
       if (!response.ok) {
         const errorMessage = await response.text();
         throw new Error(errorMessage || "Signup failed");
       }
-
+      
       alert("Signup successful! 🎉");
+      setUserInfo({name, username, github, linkedin, role});
+      localStorage.setItem("userInfo", JSON.stringify({name, username, github, linkedin, role}));
+      await prefetchProjectDetails();
+      navigate("/client");
     } catch (error) {
       alert(`Failed to register: ${error.message}`);
     } finally {
@@ -71,7 +91,12 @@ export default function Login() {
         const errorMessage = await response.text();
         throw new Error(errorMessage || "Signin failed");
       }
-
+      const data = await response.json();
+      const details = data.user;
+      alert("Signed in successfully! 🎉");
+      setUserInfo({name:details.name, username:details.username, github:details.github, linkedin:details.linkedin, role:details.role});
+      localStorage.setItem("userInfo", JSON.stringify({name:details.name, username:details.username, github:details.github, linkedin:details.linkedin, role:details.role}));
+      await prefetchProjectDetails();
       navigate("/client");
     } catch (error) {
       alert(`Failed to signin: Invalid Credentials`);
@@ -90,21 +115,63 @@ export default function Login() {
           <form onSubmit={(ev) => handleSignUp(ev)}>
             <h1>Create Account</h1>
             <br />
+            <br />
             <input
+              required
               type="text"
               placeholder="Name"
               onChange={(ev) => setName(ev.target.value)}
             />
             <input
+              required
               type="email"
               placeholder="Username"
               onChange={(ev) => setUsername(ev.target.value)}
             />
             <input
+              required
               type="password"
               placeholder="Password"
               onChange={(ev) => setPassword(ev.target.value)}
             />
+            <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+              <label>
+              {/* checking user or supervisor */}
+              <input
+                type="radio"
+                name="role"
+                value="user"
+                checked={role === "user"}
+                onChange={() => setRole("user")}
+              />
+              User
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="role"
+                  value="supervisor"
+                  checked={role === "supervisor"}
+                  onChange={() => setRole("supervisor")}
+                />
+                Supervisor
+              </label>
+            </div>
+            
+            {role === "user" && (
+            <>
+            <input
+              type="text"
+              placeholder="Github link"
+              onChange={(ev) => setGithub(ev.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="Linkedin link"
+              onChange={(ev) => setLinkedin(ev.target.value)}
+            />
+          </>)}
+          
             <button ref={b1} type="submit">
               Sign Up
             </button>

@@ -53,9 +53,9 @@ Employs node-cron to schedule reminder emails every 15 days.
 
 ## 📊 Database Links (Read-only)
 
-Projects DB: Projects Sheet
+Projects DB: https://docs.google.com/spreadsheets/d/1Ry8t79XvP5ii2N81B7ybPjkgmy1ZGkPoHjZ8AN7S_4Y/edit?usp=sharing
 
-Users DB: Users Sheet
+Users DB: https://docs.google.com/spreadsheets/d/1wbXzj1m1R-s_nCZk3KCYMWHbOQrbRyRQgZiFuMyE8IQ/edit?usp=sharing
 
 
 ## 🧩 Modules Used (Backend)

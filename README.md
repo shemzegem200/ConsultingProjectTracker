@@ -8,17 +8,20 @@
 cd api
 npm install
 node index.js
+```
 
-🎨 How to Run Frontend
+## 🎨 How to Run Frontend
 
 Navigate to the client directory and start the development server:
 
+```bash
 cd clients
 npm install -g yarn
 yarn install
 yarn run dev
+```
 
-📘 API Documentation
+## 📘 API Documentation
 
 You can view the full API documentation by visiting:
 
@@ -31,7 +34,7 @@ https://consultingprojecttracker-1.onrender.com/api-docs/
 
 ---
 
-🚀 Backend Features
+## 🚀 Backend Features
 
 Built with Express in a Node.js environment.
 
@@ -48,21 +51,21 @@ Uses multer middleware for handling file uploads.
 Employs node-cron to schedule reminder emails every 15 days.
 
 
-📊 Database Links (Read-only)
+## 📊 Database Links (Read-only)
 
 Projects DB: Projects Sheet
 
 Users DB: Users Sheet
 
 
-🧩 Modules Used (Backend)
+## 🧩 Modules Used (Backend)
 
 express, axios, cors, body-parser, cloudinary, dotenv, multer, node-cron, nodemailer, stream, swagger-jsdoc, swagger-ui-express
 
 
 ---
 
-🎯 Frontend Features
+## 🎯 Frontend Features
 
 Two user roles: User and Supervisor
 
@@ -89,7 +92,7 @@ Update billing status and project progress (ongoing/completed)
 
 
 
-✅ General Frontend Features
+## ✅ General Frontend Features
 
 Persistent login system
 
@@ -104,14 +107,14 @@ Filtering options across multiple attributes
 Icons integrated from react-icons/fa
 
 
-🧩 Modules Used (Frontend)
+## 🧩 Modules Used (Frontend)
 
 react-router-dom, html2canvas, date-fns, jspdf, react-icons, recharts, styled-components
 
 
 ---
 
-⚙️ Future Improvements
+## ⚙️ Future Improvements
 
 Make the application fully mobile responsive
 

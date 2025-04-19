@@ -15,7 +15,7 @@ node index.js
 Navigate to the client directory and start the development server:
 
 ```bash
-cd clients
+cd client
 npm install -g yarn
 yarn install
 yarn run dev
